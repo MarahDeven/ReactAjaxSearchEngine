@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Weather from "./Weather";
+import Search from "./Search";
 
 import "./App.css";
 
@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <h1>Weather App</h1>
-      <Weather city="London" temperature={7} />
+      <Search city="London" temperature={7} />
     </div>
   );
 }
