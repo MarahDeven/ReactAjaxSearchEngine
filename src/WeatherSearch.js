@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export default function WeatherSearch() {
+  let [city, setCity] = useState("");
+
   function handlSubmit(event) {
     event.preventDefault();
   }
