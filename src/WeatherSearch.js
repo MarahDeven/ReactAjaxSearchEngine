@@ -6,6 +6,9 @@ export default function WeatherSearch() {
 
   function handlSubmit(event) {
     event.preventDefault();
+    let apiKey = "4af869c2b16527dd3b375c7f352dada0";
+    let units = "imperial";
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
   }
 
   function updateCity(event) {
