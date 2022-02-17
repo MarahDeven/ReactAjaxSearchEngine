@@ -4,10 +4,17 @@ import axios from "axios";
 export default function WeatherSearch() {
   const [city, setCity] = useState("");
   const [loaded, setLoaded] = useState(false);
+  const [weather, setWeather] = useState({});
 
   function displayWeather(response) {
     setLoaded(true);
-    console.log(response.data.main.temp);
+    setWeather({
+      temperature: response.data.main.temp,
+      description: response.data.weather[0].description,
+      humidity: response.data.main.humidity,
+      wind: response.data.wind.speed,
+      icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    });
   }
 
   function handlSubmit(event) {
@@ -21,14 +28,30 @@ export default function WeatherSearch() {
   function updateCity(event) {
     setCity(event.target.value);
   }
+
+  let form = (
+    <form onSubmit={handlSubmit}>
+      <input type="search" placeholder="enter a city" onChange={updateCity} />
+      <button type="submit">Search</button>
+    </form>
+  );
+
   if (loaded) {
-    return "Loaded";
-  } else {
     return (
-      <form onSubmit={handlSubmit}>
-        <input type="search" placeholder="enter a city" onChange={updateCity} />
-        <input type="submit" value="Search" />
-      </form>
+      <div>
+        {form}
+        <ul>
+          <li>Temperature: {Math.round(weather.temperature)}°C </li>
+          <li>Description: {weather.description}</li>
+          <li>Humidity: {weather.humidity}%</li>
+          <li>Windspeed: {Math.round(weather.wind)} km/h</li>
+          <li>
+            <img src={weather.icon} alt="weather-icon" />
+          </li>
+        </ul>
+      </div>
     );
+  } else {
+    return form;
   }
 }
