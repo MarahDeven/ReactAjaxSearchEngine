@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Search from "./Search";
 
 import "./App.css";
+import WeatherSearch from "./WeatherSearch";
 
 function App() {
   return (
     <div className="App">
       <h1>Weather App</h1>
-      <Search />
+      <WeatherSearch />
     </div>
   );
 }
