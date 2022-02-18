@@ -4,20 +4,14 @@ import axios from "axios";
 export default function WeatherSearch() {
   const [city, setCity] = useState("");
   const [loaded, setLoaded] = useState(false);
-  const [weather, setWeather] = useState({});
+  const [temperature, setTemperature] = useState(null);
 
   function displayWeather(response) {
     setLoaded(true);
-    setWeather({
-      temperature: response.data.main.temp,
-      description: response.data.weather[0].description,
-      humidity: response.data.main.humidity,
-      wind: response.data.wind.speed,
-      icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
-    });
+    setTemperature(response.data.main.temp);
   }
 
-  function handlSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
     let apiKey = "4af869c2b16527dd3b375c7f352dada0";
     let units = "imperial";
@@ -30,28 +24,15 @@ export default function WeatherSearch() {
   }
 
   let form = (
-    <form onSubmit={handlSubmit}>
-      <input type="search" placeholder="enter a city" onChange={updateCity} />
-      <button type="submit">Search</button>
+    <form onSubmit={handleSubmit}>
+      <input type="search" placeholder="Type a city" onChange={updateCity} />
+      <input type="submit" value="Search" />
     </form>
   );
 
   if (loaded) {
-    return (
-      <div>
-        {form}
-        <ul>
-          <li>Temperature: {Math.round(weather.temperature)}°C </li>
-          <li>Description: {weather.description}</li>
-          <li>Humidity: {weather.humidity}%</li>
-          <li>Windspeed: {Math.round(weather.wind)} km/h</li>
-          <li>
-            <img src={weather.icon} alt="weather-icon" />
-          </li>
-        </ul>
-      </div>
-    );
+    return temperature;
   } else {
-    return form;
+    return <div>{form}</div>;
   }
 }
