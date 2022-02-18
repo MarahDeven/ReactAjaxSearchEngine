@@ -4,11 +4,17 @@ import axios from "axios";
 export default function WeatherSearch() {
   const [city, setCity] = useState("");
   const [loaded, setLoaded] = useState(false);
-  const [temperature, setTemperature] = useState(null);
+  const [weather, setWeather] = useState("");
 
   function displayWeather(response) {
     setLoaded(true);
-    setTemperature(response.data.main.temp);
+    setWeather({
+      temperature: response.data.main.temp,
+      description: response.data.weather[0].description,
+      humidity: response.data.main.humidity,
+      wind: response.data.wind.speed,
+      icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    });
   }
 
   function handleSubmit(event) {
@@ -31,8 +37,21 @@ export default function WeatherSearch() {
   );
 
   if (loaded) {
-    return temperature;
+    return (
+      <div>
+        {form}
+        <ul>
+          <li>Temperature: {Math.round(weather.temperature)}°C </li>
+          <li>Description: {weather.description}</li>
+          <li>Humidity: {weather.humidity}%</li>
+          <li>Windspeed: {Math.round(weather.wind)} km/h</li>
+          <li>
+            <img src={weather.icon} alt="weather-icon" />
+          </li>
+        </ul>
+      </div>
+    );
   } else {
-    return <div>{form}</div>;
+    return form;
   }
 }
